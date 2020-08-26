@@ -19,9 +19,21 @@ TEAL_FG=$(tput setaf 6 2>/dev/null)
 YELLOW_FG=$(tput setaf 3 2>/dev/null)
 END_FG_COLOR=$(tput sgr0 2>/dev/null)
 
-GOPATH=$(go env GOPATH)
-export GOPATH
-GO_BIN="$(echo "$GOPATH" | cut -d: -f1)/bin"
+CYGWIN=0
+
+if [[ $(uname | cut -d- -f1) == "CYGWIN_NT" ]]; then
+    CYGWIN=1
+fi
+
+if [[ $CYGWIN == 0 ]]; then
+    GOPATH=$(go env GOPATH)
+    export GOPATH
+    GO_BIN="$(echo "$GOPATH" | cut -d: -f1)/bin"
+else
+    GOPATH=$GOPATH
+    GO_BIN="$(echo "$GOPATH")/bin"
+fi
+
 MISSING=0
 
 missing_dep() {
@@ -48,10 +60,10 @@ check_deps() {
     done
 
     # Don't print `shellcheck`s location.
-    if ! which shellcheck > /dev/null
-    then
-        missing_dep shellcheck
-    fi
+#xxx#    if ! which shellcheck > /dev/null
+#xxx#     then
+#xxx#         missing_dep shellcheck
+#xxx#     fi
 
     # Don't print `sqlite3`s location.
     if ! which sqlite3 > /dev/null

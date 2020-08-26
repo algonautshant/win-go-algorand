@@ -160,7 +160,8 @@ build: buildsrc gen
 # get around a bug in go build where it will fail
 # to cache binaries from time to time on empty NFS
 # dirs
-buildsrc: crypto/libs/$(OS_TYPE)/$(ARCH)/lib/libsodium.a node_exporter NONGO_BIN deps $(ALGOD_API_SWAGGER_INJECT) $(KMD_API_SWAGGER_INJECT)
+#xxx# buildsrc: crypto/libs/$(OS_TYPE)/$(ARCH)/lib/libsodium.a node_exporter NONGO_BIN deps $(ALGOD_API_SWAGGER_INJECT) $(KMD_API_SWAGGER_INJECT)
+buildsrc: crypto/libs/$(OS_TYPE)/$(ARCH)/lib/libsodium.a NONGO_BIN deps $(ALGOD_API_SWAGGER_INJECT) $(KMD_API_SWAGGER_INJECT)
 	mkdir -p tmp/go-cache && \
 	touch tmp/go-cache/file.txt && \
 	GOCACHE=$(SRCPATH)/tmp/go-cache go install $(GOTRIMPATH) $(GOTAGS) $(GOBUILDMODE) -ldflags="$(GOLDFLAGS)" ./...
@@ -234,16 +235,16 @@ cleango:
 	rm -f $(GENERATED_FILES)
 
 # assign the phony target node_exporter the dependency of the actual executable.
-node_exporter: $(GOPATH1)/bin/node_exporter
+#xxx# node_exporter: $(GOPATH1)/bin/node_exporter
 
 # The recipe for making the node_exporter is by extracting it from the gzipped&tar file.
 # The file is was taken from the S3 cloud and it traditionally stored at
 # /travis-build-artifacts-us-ea-1.algorand.network/algorand/node_exporter/latest/node_exporter-stable-linux-x86_64.tar.gz
-$(GOPATH1)/bin/node_exporter:
-	mkdir -p $(GOPATH1)/bin && \
-	cd $(GOPATH1)/bin && \
-	tar -xzvf $(SRCPATH)/installer/external/node_exporter-stable-$(shell ./scripts/ostype.sh)-$(shell uname -m | tr '[:upper:]' '[:lower:]').tar.gz && \
-	cd -
+#xxx# $(GOPATH1)/bin/node_exporter:
+#xxx# 	mkdir -p $(GOPATH1)/bin && \
+#xxx# 	cd $(GOPATH1)/bin && \
+#xxx# 	tar -xzvf $(SRCPATH)/installer/external/node_exporter-stable-$(shell ./scripts/ostype.sh)-$(shell uname -m | tr '[:upper:]' '[:lower:]').tar.gz && \
+#xxx# 	cd -
 
 # deploy
 
@@ -284,7 +285,8 @@ dump: $(addprefix gen/,$(addsuffix /genesis.dump, $(NETWORKS)))
 install: build
 	scripts/dev_install.sh -p $(GOPATH1)/bin
 
-.PHONY: default fmt vet lint check_shell sanity cover prof deps build test fulltest shorttest clean cleango deploy node_exporter install %gen gen NONGO_BIN
+#xxx# .PHONY: default fmt vet lint check_shell sanity cover prof deps build test fulltest shorttest clean cleango deploy node_exporter install %gen gen NONGO_BIN
+.PHONY: default fmt vet lint check_shell sanity cover prof deps build test fulltest shorttest clean cleango deploy install %gen gen NONGO_BIN
 
 ###### TARGETS FOR CICD PROCESS ######
 include ./scripts/release/mule/Makefile.mule

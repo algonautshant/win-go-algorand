@@ -10,6 +10,8 @@ elif [[ "${ARCH}" = "armv7l" ]]; then
     echo "arm"
 elif [[ "${ARCH}" = "aarch64" ]]; then
     echo "arm64"
+elif [[ "${ARCH}" = "CYGWIN_NT-10.0" ]]; then
+    echo "cygwin"
 else
     # Anything else needs to be specifically added...
     echo "unsupported"
