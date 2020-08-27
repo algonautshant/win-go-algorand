@@ -161,6 +161,11 @@ build: buildsrc gen
 # to cache binaries from time to time on empty NFS
 # dirs
 #xxx# buildsrc: crypto/libs/$(OS_TYPE)/$(ARCH)/lib/libsodium.a node_exporter NONGO_BIN deps $(ALGOD_API_SWAGGER_INJECT) $(KMD_API_SWAGGER_INJECT)
+ifeq ($(shell uname | cut -d- -f1), CYGWIN_NT)
+SRCPATH := $(shell pwd | sed 's/.*\/c\//c:\//g')
+endif
+
+
 buildsrc: crypto/libs/$(OS_TYPE)/$(ARCH)/lib/libsodium.a NONGO_BIN deps $(ALGOD_API_SWAGGER_INJECT) $(KMD_API_SWAGGER_INJECT)
 	mkdir -p tmp/go-cache && \
 	touch tmp/go-cache/file.txt && \

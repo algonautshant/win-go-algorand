@@ -16,9 +16,9 @@ function install_go_module {
     # Check for version to go.mod version
     VERSION=$(get_go_version "$1")
     if [ -z "$VERSION" ]; then
-     	OUTPUT=$(GO111MODULE=off go get -u "$1" 2>&1)
+     	OUTPUT=$(GO111MODULE=off go get -u -insecure "$1" 2>&1)
     else
-     	OUTPUT=$(cd && GO111MODULE=on go get "$1@${VERSION}" 2>&1)
+     	OUTPUT=$(cd && GO111MODULE=on go get -insecure "$1@${VERSION}" 2>&1)
     fi
     if [ $? != 0 ]; then
         echo "error: executing \"go get $1\" failed : ${OUTPUT}"
