@@ -37,6 +37,7 @@ func timevalSubToMicroseconds(a, b syscall.Timeval) int64 {
 
 // UsageLogThread utility logging method
 func UsageLogThread(ctx context.Context, log Logger, period time.Duration, wg *sync.WaitGroup) {
+/*
 	if wg != nil {
 		defer wg.Done()
 	}
@@ -69,4 +70,6 @@ func UsageLogThread(ctx context.Context, log Logger, period time.Duration, wg *s
 		prevUsage = usage
 		prevTime = now
 	}
+		*/
+
 }

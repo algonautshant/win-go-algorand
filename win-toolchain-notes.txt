@@ -1,0 +1,89 @@
+dos2unix scriptfiles
+find . -name \*.m4|xargs dos2unix -f
+find . -name \*.ac|xargs dos2unix -f
+find . -name \*.am|xargs dos2unix -f
+find . -name \*.sh|xargs dos2unix -f
+
+https://sqlite.org/download.html
+https://sqlite.org/2020/sqlite-tools-win32-x86-3330000.zip
+
+export PATH=/usr/bin:/cygdrive/c/Go/bin/:/cygdrive/c/Users/shk_s/go/bin
+export GOPATH=c:/Users/shk_s/go
+export GOBIN=c:/Users/shk_s/go/bin
+
+go get -u golang.org/x/lint/golint
+go get -u golang.org/x/tools/cmd/stringer
+
+
+cygwin offers /cygwindrive/c for c
+however, go relies on go env gopath, which expects c:/ type of path
+
+to fix:
+ WARNING: definition "#/definitions/APIV1RequestEnvelope" is not used anywhere
+
+
+For the following problem, the solution is to set the correct GOPATH, and put the source in:
+/cygdrive/c/Users/<username>/go/src/github.com/algorand/go-algorand/
+bash-4.4$ make install
+go: inconsistent vendoring in C:\Go\src\github.com\algorand\go-algorand:
+        go.mod requires github.com/algorand/go-algorand  but vendor/modules.txt does not include it.
+	        run 'go mod tidy; go mod vendor' to sync
+		./scripts/check_deps.sh
+		[./scripts/check_deps.sh] Required dependencies installed.
+		cd daemon/algod/api && \
+		        PATH=c/bin:$PATH \
+			        go generate ./...
+				go: inconsistent vendoring in C:\Go\src\github.com\algorand\go-algorand:
+				        go.mod requires github.com/algorand/go-algorand  but vendor/modules.txt does not include it.
+					        run 'go mod tidy; go mod vendor' to sync
+						make: *** [Makefile:121: daemon/algod/api/swagger.json] Error 1
+						*/
+
+
+
+For the following problem, the flag is added to allow insecure protocol for downloads
+./scripts/configure_dev-deps.sh
+++ go get -u github.com/algorand/msgp
++ OUTPUT='package github.com/algorand/msgp: cannot download, http://github.com/algorand/msgp.git uses insecure protocol'
+
+In windows there are two go folders generated.
+C:\Go and C:\Users\XXX\go
+To fix this issue you need to place all of your projects under the users golang folder:
+C:\Users\XXX\go\src\github.com\XXXX
+
+Set:
+export GIT_TERMINAL_PROMPT=1
+for the following problem:
+        PATH=c/bin:$PATH \
+	        go generate ./...
+		go: github.com/algorand/go-odec/codec@v0.0.0-20190507210007-269d70b6135d: invalid version: git fetch -f https://github.com/algorand/go-odec refs/heads/*:refs/heads/* refs/tags/*:refs/tags/* in c:\Users\shk_s\go\pkg\mod\cache\vcs\dd445629d6574ce4481587d85e94d57f68e80af53608e9376d601bf670613a52: exit status 128:
+		        fatal: could not read Username for 'https://github.com': terminal prompts disabled
+			make: *** [Makefile:121: daemon/algod/api/swagger.json] Error 1
+
+For the following problem, mod.go in master has the solution. I Don't know what it is. 
+      github.com/algorand/oapi-codegen/pkg/runtime: github.com/algorand/oapi-codegen@v1.3.5: parsing go.mod:
+              module declares its path as: github.com/deepmap/oapi-codegen
+	                      but was required as: github.com/algorand/oapi-codegen
+			      make: *** [Makefile:121: daemon/algod/api/swagger.json] Error 1
+
+For the problem below, run:
+daemon/algod/api/server/lib/bundle_swagger_json.sh
+
+2020/08/27 20:54:22 See warnings below:
+2020/08/27 20:54:22 - WARNING: response "#/responses/RawBlockResponse" is not used anywhere
+server\router.go:59: running "./lib/bundle_swagger_json.sh": fork/exec ./lib/bundle_swagger_json.sh: %1 is not a valid Win32 application.
+make: *** [Makefile:121: daemon/algod/api/swagger.json] Error 1
+
+https://github.com/golang/go/wiki/InstallFromSource#install-c-tools
+On Windows, install gcc with TDM-GCC. (Make sure you add its bin
+subdirectory to your PATH.) Go does not support the Cygwin toolchain.
+
+Installed:
+https://jmeubank.github.io/tdm-gcc/
+
+Using powershell
+
+trying to build libsodium by copying building scripts from the original libsodium and using mingw
+
+
+

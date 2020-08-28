@@ -16,3 +16,4 @@ make clean && \
 make && \
 make check && \
 make install
+sleep 22

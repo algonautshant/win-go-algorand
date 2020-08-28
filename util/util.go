@@ -17,13 +17,14 @@
 package util
 
 import (
-	"syscall"
+//	"syscall"
 )
 
 /* misc */
 
 // RaiseRlimit increases the number of file descriptors we can have
 func RaiseRlimit(amount uint64) error {
+/*
 	var rLimit syscall.Rlimit
 	err := syscall.Getrlimit(syscall.RLIMIT_NOFILE, &rLimit)
 	if err != nil {
@@ -35,5 +36,6 @@ func RaiseRlimit(amount uint64) error {
 	if err != nil {
 		return err
 	}
+*/
 	return nil
 }
